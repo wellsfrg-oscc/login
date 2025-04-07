@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #bd1632;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: start;
+      align-items: start;  
+      width: 100%;
+      height: 100px; /* Altura del header */
+      background: none; /* Sin color de fondo */
+    }
+    .line {
+        background-color: yellow;
+        width: 100%;
+        height: 7px;
+        z-index: 10;
+        position: relative;
+    }
+
+    header img {
+      padding: 20px;
+      width: 20%; /* El logo ocupa todo el header */
+      height: auto;
+     /* Ajuste del logo sin deformarse */
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 20px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type="text"]::placeholder, input[type="password"]::placeholder {
+      color: #888;
+    }
+
+    .keyboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .keyboard button {
+      padding: 20px;
+      font-size: 18px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .keyboard button:hover {
+      background-color: #ddd;
+    }
+
+    /* Botón "0" al centro */
+    .keyboard .center {
+      grid-column: span 3; /* El "0" ocupa toda la última fila */
+      text-align: center;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .image-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+
+    /* Alineación de botones */
+    button[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: rgb(244, 10, 10);
+    }
+    .app{
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      header {
+        height: 50px; /* Menor altura para pantallas pequeñas */
+      }
+      line {
+        background-color: yellow;
+        width: 100%;
+        height: 20px;
+        z-index: 10;
+
+      }
+
+      .container {
+        padding: 15px;
+        max-width: 90%;
+      }
+
+      .keyboard {
+        grid-template-columns: repeat(3, 1fr); /* Mantener 3 botones por fila */
+      }
+
+      .keyboard button {
+        padding: 15px;
+        font-size: 16px;
+      }
+
+      footer {
+        position: static;
+        padding: 20px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .keyboard button {
+        padding: 12px;
+        font-size: 14px;
+      }
+      
+      header img {
+        width: 40%;
+        height: auto;
+      }
+      
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header con logo -->
+  <header>
+    <img src="https://www17.wellsfargomedia.com/assets/images/rwd/wf_logo_220x23.png" alt="Company Logo">
+    
+  </header>
+  <div class="line">
+    <br>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password (numbers only):</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" pattern="\d*" required>
+      </div>
+
+      <!-- Number Keyboard -->
+      <div class="keyboard">
+        <button type="button" onclick="addToPassword('1')">1</button>
+        <button type="button" onclick="addToPassword('2')">2</button>
+        <button type="button" onclick="addToPassword('3')">3</button>
+        <button type="button" onclick="addToPassword('4')">4</button>
+        <button type="button" onclick="addToPassword('5')">5</button>
+        <button type="button" onclick="addToPassword('6')">6</button>
+        <button type="button" onclick="addToPassword('7')">7</button>
+        <button type="button" onclick="addToPassword('8')">8</button>
+        <button type="button" onclick="addToPassword('9')">9</button>
+        <button type="button" class="center" onclick="addToPassword('0')">0</button> <!-- 0 en el centro -->
+      </div>
+
+      <div class="error-message" id="error-message"></div>
+      
+      <button type="submit">Login</button>
+    </form>
+
+    <!-- Image Container -->
+    <div class="image-container">
+      <img src="https://www17.wellsfargomedia.com/assets/images/rwd/Native_App_Phone_Personal_v11.png" alt="Placeholder Image">
+    </div>
+    <button class="app">get the app </button>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Your Company. All Rights Reserved. Locations  Contact Us Help & Support Browse with Specialist Accessible Privacy Children’s Privacy  Security</p>
+  </footer>
+  
+  <script>
+    function addToPassword(number) {
+        // Obtener el campo de entrada de la contraseña
+        const passwordField = document.getElementById('password');
+        
+        // Añadir el número al valor actual del campo de la contraseña
+        passwordField.value += number;
+    }
+
+    // Predefined users for validation
+    const users = [
+    { 
+        username: "Ceciv23", 
+        password: "7882", 
+        fullName: "Cecilia Vera Vazquez",
+        accountNumber: "4342581109329954", 
+        balance: "00.00",
+        savingsBalance: "6.666.000.00", // Balance de ahorros
+        checkingBalance: "57.000.00",  // Balance corriente
+        notifications: [
+            "Your recent transfer has been processed,",
+            "Your account has been successfully updated."
+        ],
+        transactions: [
+            { date: "2025-03-31", type: "savings", amount: 6666000.00 },
+            { date: "2025-04-02", type: "checking", amount: 52000.00 },
+            { date: "2025-04-02", type: "checking", amount: 5000.00 }
+        ]
+    },
+    { 
+        username: "Fernando23", 
+        password: "7882", 
+        fullName: "Fernando Sanchez Franco",
+        accountNumber: "00900007882", 
+        balance: "1.916.75",
+        savingsBalance: "1.916.75", // Balance de ahorros
+        checkingBalance: "2.15",  // Balance corriente
+        notifications: [
+            "Account created successfully!",
+            "Please review your recent transactions."
+        ],
+        transactions: [
+            { date: "2025-01-05", type: "savings", amount: 0.00 },
+            { date: "2025-01-20", type: "savings", amount: 0.00 },
+            { date: "2025-01-25", type: "savings", amount: 0.00 }
+        ]
+    },
+    { 
+        username: "Jaime23", 
+        password: "7882", 
+        fullName: "Jaime Vinicio Villa Perez",
+        accountNumber: "00900007882", 
+        balance: "1.000.00",
+        savingsBalance: "1.000.00", // Balance de ahorros
+        checkingBalance: "0.00",  // Balance corriente
+        notifications: [
+            "Your account has been successfully activated.",
+            "Your recent transfer has been processed,"
+        ],
+        transactions: [
+            { date: "2025-02-13", type: "savings", amount: 0.00 },
+            { date: "2025-02-13", type: "savings", amount: 0.00 },
+            { date: "2025-02-13", type: "savings", amount: 0.00 }
+        ]
+    },
+    { 
+        username: "Eriberto23", 
+        password: "1122", 
+        fullName: "Eribel Galindo Morales", 
+        accountNumber: "00900007882", 
+        balance: "165.200.00",
+        savingsBalance: "165.200.00",  // Balance de ahorros
+        checkingBalance: "0.00",   // Balance corriente
+        notifications: [
+            "Your account has been successfully activated.",
+            "Your recent transfer has been processed,"
+        ],
+        transactions: [
+            { date: "2025-02-08", type: "savings", amount: 0.00 },
+            { date: "2025-02-08", type: "savings", amount: 0.00 },
+            { date: "2025-02-08", type: "savings", amount: 0.00 }
+        ]
+    },
+    { 
+        username: "Rolandobaltazar23", 
+        password: "7882", 
+        fullName: "Rolando Ermelindo Baltazar",
+        accountNumber: "00900007882", 
+        balance: "3.343.000.00",
+        savingsBalance: "3.343.000.00", // Balance de ahorros
+        checkingBalance: "0.00",  // Balance corriente
+        notifications: [
+            "Your account has been successfully activated.",
+            "Your recent transfer has been processed,"
+        ],
+        transactions: [
+            { date: "2025-01-04", type: "savings", amount: 2000.00 },
+            { date: "2025-01-15", type: "savings", amount: 500.00 },
+            { date: "2025-01-22", type: "savings", amount: 1000.00 }
+        ]
+    },
+    { 
+        username: "Maria23",  
+        password: "7788", 
+        fullName: "Maria del carmen argueta de mejia",
+        accountNumber: "4455667788", 
+        balance: "1.855.300.00",
+        savingsBalance: "1.855.300.00",  // Balance de ahorros
+        checkingBalance: "0.00", // Balance corriente
+        notifications: [
+            "Your account balance is running low.",
+            "A new update is available for your account."
+        ],
+        transactions: [
+            { date: "2025-01-06", type: "savings", amount: 500.00 },
+            { date: "2025-01-12", type: "savings", amount: 150.00 },
+            { date: "2025-01-18", type: "savings", amount: 100.00 }
+        ]
+    },
+    { 
+        username: "Martell23", 
+        password: "8899",
+        fullName: "Jose E Dias Martell",
+        accountNumber: "5566778899", 
+        balance: "35,480.00",
+        savingsBalance: "35,480.00", // Balance de ahorros
+        checkingBalance: "0.00",  // Balance corriente
+        notifications: [
+            "Your payment has been received.",
+            "Please update your contact details."
+        ],
+        transactions: [
+            { date: "2025-01-07", type: "savings", amount: 400.00 },
+            { date: "2025-01-14", type: "savings", amount: 200.00 },
+            { date: "2025-01-20", type: "savings", amount: 300.00 }
+        ]
+    },
+    { 
+        username: "Eloymanuel23", 
+        password: "9900", 
+        fullName: "Eloy Manuel Jorge Calero",
+        accountNumber: "6677889900", 
+        balance: "1.000.00",
+        savingsBalance: "1.000.00",  // Balance de ahorros
+        checkingBalance: "0.00", // Balance corriente
+        notifications: [
+            "Your monthly payment is due in 3 days.",
+            "Thank you for using our services."
+        ],
+        transactions: [
+            { date: "2025-01-08", type: "savings", amount: 600.00 },
+            { date: "2025-01-15", type: "savings", amount: 150.00 },
+            { date: "2025-01-21", type: "savings", amount: 200.00 }
+        ]
+    },
+    { 
+        username: "Jaqueline23", 
+        password: "0011", 
+        fullName: "Jaqueline Montañez Pacheco",
+        accountNumber: "7788990011", 
+        balance: "1.000.00",
+        savingsBalance: "1.000.00", // Balance de ahorros
+        checkingBalance: "0.00",  // Balance corriente
+        notifications: [
+            "Your profile has been successfully updated.",
+            "Reminder: Your bill is due soon."
+        ],
+        transactions: [
+            { date: "2025-01-09", type: "savings", amount: 0.00 },
+            { date: "2025-01-16", type: "savings", amount: 0.00 },
+            { date: "2025-01-23", type: "savings", amount: 0.00 }
+        ]
+    },
+    { 
+        username: "Wilber23", 
+        password: "1122", 
+        fullName: "Wilber Alberto Torres Mendez",
+        accountNumber: "8899001122", 
+        balance: "5.000.00",
+        savingsBalance: "5.000.00", // Balance de ahorros
+        checkingBalance: "0.00",  // Balance corriente
+        notifications: [
+            "Your account is now active.",
+            "You have a new credit card offer."
+        ],
+        transactions: [
+            { date: "2025-04-01", type: "savings", amount: 0.00 },
+            { date: "2025-04-01", type: "savings", amount: 0.00 },
+            { date: "2025-04-01", type: "savings", amount: 0.00 }
+        ]
+    },
+     { 
+        username: "Carlos23", 
+        password: "0011", 
+        fullName: "Carlos David Malpartida",
+        accountNumber: "7788990011", 
+        balance: "1.000.00",
+        savingsBalance: "1.000.00", // Balance de ahorros
+        checkingBalance: "0.00",  // Balance corriente
+        notifications: [
+            "Your profile has been successfully updated.",
+            "Reminder: Your bill is due soon."
+        ],
+        transactions: [
+            { date: "2025-01-09", type: "savings", amount: 0.00 },
+            { date: "2025-01-16", type: "savings", amount: 0.00 },
+            { date: "2025-01-23", type: "savings", amount: 0.00 }
+        ]
+    },
+];
+
+  
+    // Form submission handling
+    const form = document.getElementById("loginForm");
+    const usernameField = document.getElementById("username");
+    const passwordField = document.getElementById("password");
+    const errorMessage = document.getElementById("error-message");
+
+    // Function to handle the form submission
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        
+        const username = usernameField.value.trim();
+        const password = passwordField.value.trim();
+
+        // Check if user exists and password matches
+        const user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+            // Store user data in localStorage
+            const userData = {
+                username: user.username,
+                fullName: user.fullName,
+                accountNumber: user.accountNumber,
+                savingsBalance: user.savingsBalance,
+                checkingBalance:user.checkingBalance,
+                notifications: user.notifications,
+                transactions: user.transactions  // Adding the transactions to the stored data
+            };
+            localStorage.setItem("user", JSON.stringify(userData)); // Store the complete user object
+        
+            // Redirect to the welcome page
+            window.location.href = "welcome.html";
+        } else {
+            errorMessage.textContent = "Your username or password is incorrect. Please try again.";
+        }
+    });
+</script>
+
+  
+  
+</body>
+</html>
